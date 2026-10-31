@@ -1,0 +1,12 @@
+[
+    {
+        "repository": "crdroidandroid/android_hardware_dolby",
+        "target_path": "hardware/dolby",
+        "branch": "17.0-rtwo"
+    },
+    {
+        "repository": "crdroidandroid/android_packages_apps_LunarisDolby",
+        "target_path": "packages/apps/LunarisDolby",
+        "branch": "17.0"
+    }
+]
