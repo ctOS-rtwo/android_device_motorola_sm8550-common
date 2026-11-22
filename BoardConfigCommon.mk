@@ -198,7 +198,7 @@ TARGET_RECOVERY_FSTAB := $(COMMON_PATH)/init/fstab.qcom
 ENABLE_VENDOR_RIL_SERVICE := true
 
 # SELinux
-include device/qcom/sepolicy_vndr/SEPolicy.mk
+include device/qcom/sepolicy_vndr/sm8550/SEPolicy.mk
 include device/xperience/sepolicy/libperfmgr/sepolicy.mk
 include hardware/motorola/sepolicy/qti/SEPolicy.mk
 # Dolby (mirrors hardware/dolby/dolby.mk so the policy is never missed)
