@@ -199,7 +199,7 @@ ENABLE_VENDOR_RIL_SERVICE := true
 
 # SELinux
 include device/qcom/sepolicy_vndr/SEPolicy.mk
-include device/lineage/sepolicy/libperfmgr/sepolicy.mk
+include device/xperience/sepolicy/libperfmgr/sepolicy.mk
 include hardware/motorola/sepolicy/qti/SEPolicy.mk
 # Dolby (mirrors hardware/dolby/dolby.mk so the policy is never missed)
 BOARD_VENDOR_SEPOLICY_DIRS += hardware/dolby/sepolicy/vendor
