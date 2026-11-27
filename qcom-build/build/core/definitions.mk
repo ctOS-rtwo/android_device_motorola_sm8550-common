@@ -5,6 +5,6 @@ define uniq
 $(if $1,$(firstword $1) $(call uniq,$(filter-out $(firstword $1),$1)))
 endef
 
-include vendor/qcom-build/build/core/pathmap.mk
-include vendor/qcom-build/build/core/utils.mk
-include vendor/qcom-build/build/core/qcom_target.mk
+include device/motorola/sm8550-common/qcom-build/build/core/pathmap.mk
+include device/motorola/sm8550-common/qcom-build/build/core/utils.mk
+include device/motorola/sm8550-common/qcom-build/build/core/qcom_target.mk

@@ -52,7 +52,7 @@
 #
 #   USE_CCACHE                         = Enable ccache (global Android flag)
 
-include vendor/qcom-build/build/core/utils.mk
+include device/motorola/sm8550-common/qcom-build/build/core/utils.mk
 
 BUILD_TOP := $(abspath .)
 
@@ -96,7 +96,7 @@ TARGET_KERNEL_CLANG_PATH ?= $(BUILD_TOP)/prebuilts/clang/host/$(HOST_PREBUILT_TA
 # for Rust-enabled kernels rather than maintaining a toolchain denylist.
 ifeq ($(TARGET_KERNEL_LIBCLANG_PATH),)
     ifneq ($(wildcard $(TARGET_KERNEL_SOURCE)/rust/bindings/bindings_helper.h),)
-        TARGET_KERNEL_LIBCLANG_PATH := $(shell $(BUILD_TOP)/vendor/qcom-build/build/tools/select_kernel_libclang.sh \
+        TARGET_KERNEL_LIBCLANG_PATH := $(shell $(BUILD_TOP)/device/motorola/sm8550-common/qcom-build/build/tools/select_kernel_libclang.sh \
             $(BUILD_TOP)/prebuilts/clang-tools/$(HOST_PREBUILT_TAG)/bin/bindgen \
             $(TARGET_KERNEL_CLANG_PATH) \
             $(BUILD_TOP)/prebuilts/clang/host/$(HOST_PREBUILT_TAG))
@@ -126,7 +126,7 @@ endif
 KERNEL_MAKE_FLAGS += -j$(shell getconf _NPROCESSORS_ONLN)
 
 TOOLS_PATH_OVERRIDE := \
-    HIP_PATH=none PERL5LIB=$(BUILD_TOP)/prebuilts/tools-lineage/common/perl-base
+    HIP_PATH=none $(if $(wildcard $(BUILD_TOP)/prebuilts/tools-lineage/common/perl-base),PERL5LIB=$(BUILD_TOP)/prebuilts/tools-lineage/common/perl-base)
 
 ifeq ($(TARGET_KERNEL_LIBC_SYSROOT_USE), host)
     KERNEL_HOST_C_LD_FLAGS_SYSROOT :=
