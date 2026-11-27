@@ -7,9 +7,9 @@ soong_namespace {
     imports: [
         "hardware/google/interfaces",
         "hardware/google/pixel",
-        "hardware/lineage/interfaces/power-libperfmgr",
         "hardware/motorola",
         "hardware/qcom-caf/common/libqti-perfd-client",
+        "kernel/motorola/sm8550-modules",
     ],
 }
 

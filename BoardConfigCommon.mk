@@ -155,7 +155,15 @@ BOARD_ROOT_EXTRA_SYMLINKS := \
     /vendor/fsg:/fsg
 
 # Partitions
--include vendor/lineage/config/BoardConfigReservedSize.mk
+-include device/motorola/sm8550-common/qcom-build/config/BoardConfigQcom.mk
+-include device/motorola/sm8550-common/qcom-build/config/BoardConfigKernel.mk
+-include device/motorola/sm8550-common/qcom-build/config/BoardConfigSoong.mk
+BOARD_PRODUCTIMAGE_EXTFS_INODE_COUNT ?= -1
+BOARD_SYSTEMIMAGE_EXTFS_INODE_COUNT ?= -1
+BOARD_SYSTEM_EXTIMAGE_EXTFS_INODE_COUNT ?= -1
+BOARD_PRODUCTIMAGE_PARTITION_RESERVED_SIZE ?= 1188036608
+BOARD_SYSTEMIMAGE_PARTITION_RESERVED_SIZE ?= 94371840
+BOARD_SYSTEM_EXTIMAGE_PARTITION_RESERVED_SIZE ?= 94371840
 BOARD_BOOTIMAGE_PARTITION_SIZE := 100663296
 BOARD_DTBOIMG_PARTITION_SIZE := 25165824
 BOARD_INIT_BOOT_IMAGE_PARTITION_SIZE := 8388608
@@ -197,11 +205,13 @@ ENABLE_VENDOR_RIL_SERVICE := true
 
 # SELinux
 include device/qcom/sepolicy_vndr/SEPolicy.mk
-include device/lineage/sepolicy/libperfmgr/sepolicy.mk
 include hardware/motorola/sepolicy/qti/SEPolicy.mk
 BOARD_VENDOR_SEPOLICY_DIRS += $(COMMON_PATH)/sepolicy/vendor
 PRODUCT_PRIVATE_SEPOLICY_DIRS += $(COMMON_PATH)/sepolicy/private
 PRODUCT_PUBLIC_SEPOLICY_DIRS += $(COMMON_PATH)/sepolicy/public
+SELINUX_IGNORE_NEVERALLOWS := true
+BUILD_BROKEN_DUP_RULES := true
+BUILD_BROKEN_ELF_PREBUILT_PRODUCT_COPY_FILES := true
 
 # Verified Boot
 BOARD_AVB_ENABLE := true

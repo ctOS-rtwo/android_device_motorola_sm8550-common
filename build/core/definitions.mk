@@ -1,0 +1,1 @@
+-include device/motorola/sm8550-common/qcom-build/build/core/definitions.mk
