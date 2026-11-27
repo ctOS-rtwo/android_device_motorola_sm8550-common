@@ -408,23 +408,13 @@ else
     QCOM_HARDWARE_VARIANT := $(TARGET_BOARD_PLATFORM)
 endif
 
-# Allow a device to opt-out hardset of PRODUCT_SOONG_NAMESPACES
+# Allow a device to opt-out hardset of QCOM_SOONG_NAMESPACE
+# Note: PRODUCT_SOONG_NAMESPACES is readonly in BoardConfig on AOSP/GrapheneOS;
+# QCOM namespaces are declared in device/motorola/sm8550-common/common.mk instead.
 QCOM_SOONG_NAMESPACE ?= hardware/qcom-caf/$(QCOM_HARDWARE_VARIANT)
-PRODUCT_SOONG_NAMESPACES += $(QCOM_SOONG_NAMESPACE)
 
-# Add bootctrl to PRODUCT_SOONG_NAMESPACES
-PRODUCT_SOONG_NAMESPACES += hardware/qcom-caf/bootctrl
-
-# Add display-commonsys to PRODUCT_SOONG_NAMESPACES for QSSI supported platforms
 ifneq ($(filter $(QSSI_SUPPORTED_PLATFORMS),$(TARGET_BOARD_PLATFORM)),)
-    PRODUCT_SOONG_NAMESPACES += \
-        vendor/qcom/opensource/commonsys/display \
-        vendor/qcom/opensource/commonsys-intf/display \
-        vendor/qcom/opensource/interfaces/qacs/ambientdatacapture
-
     ifeq ($(filter $(UM_5_10_FAMILY) $(UM_5_15_FAMILY) $(UM_6_1_FAMILY) $(UM_6_6_FAMILY) $(UM_6_12_FAMILY),$(TARGET_BOARD_PLATFORM)),)
-        PRODUCT_SOONG_NAMESPACES += \
-            vendor/qcom/opensource/display
         $(call soong_config_set,qtidisplay,libdisplayconfig_qti_namespace,vendor/qcom/opensource/display)
     else
         $(call soong_config_set,qtidisplay,libdisplayconfig_qti_namespace,$(QCOM_SOONG_NAMESPACE))
@@ -434,48 +424,17 @@ else
     $(call soong_config_set,qtidisplay,headers_namespace,$(QCOM_SOONG_NAMESPACE)/display)
 endif
 
-# Add data-ipa-cfg-mgr to PRODUCT_SOONG_NAMESPACES if needed
-ifneq ($(USE_DEVICE_SPECIFIC_DATA_IPA_CFG_MGR),true)
-    ifneq ($(filter $(LEGACY_UM_PLATFORMS),$(TARGET_BOARD_PLATFORM)),)
-        PRODUCT_SOONG_NAMESPACES += vendor/qcom/opensource/data-ipa-cfg-mgr-legacy-um
-    else
-        PRODUCT_SOONG_NAMESPACES += hardware/qcom-caf/$(QCOM_HARDWARE_VARIANT)/data-ipa-cfg-mgr
-    endif
-endif
-
-# Add dataservices to PRODUCT_SOONG_NAMESPACES if needed
-ifneq ($(USE_DEVICE_SPECIFIC_DATASERVICES),true)
-    PRODUCT_SOONG_NAMESPACES += vendor/qcom/opensource/dataservices
-endif
-
-# Add sound trigger HAL to PRODUCT_SOONG_NAMESPACES if needed
 ifeq ($(BOARD_SUPPORTS_OPENSOURCE_STHAL),true)
-    ifneq ($(filter $(LEGACY_UM_PLATFORMS),$(TARGET_BOARD_PLATFORM)),)
-        PRODUCT_SOONG_NAMESPACES += vendor/qcom/opensource/audio-hal/st-hal
-    else
+    ifeq ($(filter $(LEGACY_UM_PLATFORMS),$(TARGET_BOARD_PLATFORM)),)
         ifneq ($(filter $(UM_5_10_FAMILY) $(UM_5_15_FAMILY) $(UM_6_1_FAMILY),$(TARGET_BOARD_PLATFORM)),)
-            PRODUCT_SOONG_NAMESPACES += vendor/qcom/opensource/audio-hal/st-hal-ar-legacy
             $(call soong_config_set,qtiaudio,legacy_headers_namespace,$(QCOM_SOONG_NAMESPACE))
             $(call soong_config_set,qtiaudio,legacy_libarpal_namespace,$(QCOM_SOONG_NAMESPACE))
         else
-            PRODUCT_SOONG_NAMESPACES += vendor/qcom/opensource/audio-hal/st-hal-ar
             $(call soong_config_set,qtiaudio,headers_namespace,$(QCOM_SOONG_NAMESPACE))
             $(call soong_config_set,qtiaudio,libarpal_namespace,$(QCOM_SOONG_NAMESPACE))
         endif
     endif
 endif
-
-# Add thermal HAL to PRODUCT_SOONG_NAMESPACES
-ifneq ($(filter $(LEGACY_UM_PLATFORMS),$(TARGET_BOARD_PLATFORM)),)
-    PRODUCT_SOONG_NAMESPACES += hardware/qcom-caf/thermal-legacy-um
-else
-    PRODUCT_SOONG_NAMESPACES += hardware/qcom-caf/thermal
-endif
-
-# Add wlan to PRODUCT_SOONG_NAMESPACES
-PRODUCT_SOONG_NAMESPACES += \
-    hardware/qcom-caf/wlan \
-    hardware/qcom-caf/wlan/qcwcn
 
 # Verified Boot
 BOARD_AVB_SYSTEM_ADD_HASHTREE_FOOTER_ARGS += --hash_algorithm sha256

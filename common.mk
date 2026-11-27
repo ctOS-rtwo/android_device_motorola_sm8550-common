@@ -285,9 +285,24 @@ PRODUCT_SOONG_NAMESPACES += \
     hardware/google/interfaces \
     hardware/google/pixel/power-libperfmgr \
     hardware/motorola \
+    hardware/qcom-caf/bootctrl \
     hardware/qcom-caf/common/libqti-perfd-client \
+    hardware/qcom-caf/sm8550 \
+    hardware/qcom-caf/sm8550/data-ipa-cfg-mgr \
+    hardware/qcom-caf/thermal \
+    hardware/qcom-caf/wlan \
+    hardware/qcom-caf/wlan/qcwcn \
     kernel/motorola/sm8550 \
-    kernel/motorola/sm8550-modules
+    kernel/motorola/sm8550-modules \
+    vendor/qcom/opensource/audio-hal/st-hal-ar-legacy \
+    vendor/qcom/opensource/commonsys/display \
+    vendor/qcom/opensource/commonsys-intf/display \
+    vendor/qcom/opensource/dataservices \
+    vendor/qcom/opensource/interfaces/qacs/ambientdatacapture
+
+# CFI include paths
+PRODUCT_CFI_INCLUDE_PATHS += \
+    hardware/qcom-caf/wlan/qcwcn/wpa_supplicant_8_lib
 
 # Telephony
 PRODUCT_PACKAGES += \
